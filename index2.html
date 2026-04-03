@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BABY PUNCH — The Wildest Meme Coin in the Galaxy</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon-pink: #ff2d78;
+    --neon-cyan: #00f5ff;
+    --neon-yellow: #ffe600;
+    --neon-green: #39ff14;
+    --neon-purple: #bf00ff;
+    --neon-orange: #ff6f00;
+    --dark: #06040f;
+    --dark2: #0d0a1a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--neon-cyan);
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, background 0.2s;
+    box-shadow: 0 0 12px var(--neon-cyan), 0 0 30px var(--neon-cyan);
+    mix-blend-mode: screen;
+  }
+  .cursor-trail {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--neon-pink);
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: left 0.15s ease, top 0.15s ease;
+    box-shadow: 0 0 10px var(--neon-pink);
+    mix-blend-mode: screen;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9000;
+    opacity: 0.35;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(6,4,15,0.75);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(0,245,255,0.12);
+  }
+  .nav-logo {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 15px var(--neon-cyan), 0 0 40px var(--neon-cyan);
+  }
+  .nav-logo span { color: var(--neon-yellow); text-shadow: 0 0 15px var(--neon-yellow); }
+  nav ul { display: flex; gap: 36px; list-style: none; }
+  nav ul a {
+    color: #ccc;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s, text-shadow 0.2s;
+  }
+  nav ul a:hover { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); }
+  .nav-cta {
+    background: transparent;
+    border: 2px solid var(--neon-pink);
+    color: var(--neon-pink);
+    padding: 10px 28px;
+    border-radius: 50px;
+    font-family: 'Bangers', cursive;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 12px var(--neon-pink), inset 0 0 12px rgba(255,45,120,0.1);
+    text-decoration: none;
+  }
+  .nav-cta:hover {
+    background: var(--neon-pink);
+    color: #fff;
+    box-shadow: 0 0 30px var(--neon-pink), 0 0 60px var(--neon-pink);
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(191,0,255,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 20% 80%, rgba(0,245,255,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 50% at 80% 20%, rgba(255,45,120,0.1) 0%, transparent 60%);
+  }
+
+  .floating-particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: floatUp linear infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .hero-text { text-align: left; }
+
+  .hero-tag {
+    display: inline-block;
+    background: rgba(0,245,255,0.1);
+    border: 1px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    box-shadow: 0 0 12px rgba(0,245,255,0.3);
+    animation: pulseBorder 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseBorder {
+    0%, 100% { box-shadow: 0 0 12px rgba(0,245,255,0.3); }
+    50% { box-shadow: 0 0 25px rgba(0,245,255,0.7), 0 0 50px rgba(0,245,255,0.3); }
+  }
+
+  .hero-title {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: 4px;
+    margin-bottom: 24px;
+    animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-60px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .hero-title .line1 { color: #fff; display: block; }
+  .hero-title .line2 {
+    display: block;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 20px var(--neon-yellow), 0 0 50px rgba(255,230,0,0.5);
+    -webkit-text-stroke: 2px rgba(255,230,0,0.3);
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+    margin-bottom: 36px;
+    animation: slideInLeft 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: slideInLeft 0.8s 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+    color: #fff;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-family: 'Bangers', cursive;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 20px rgba(255,45,120,0.5), 0 0 50px rgba(191,0,255,0.3);
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 0 40px rgba(255,45,120,0.8), 0 0 80px rgba(191,0,255,0.5);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--neon-green);
+    border: 2px solid var(--neon-green);
+    padding: 14px 38px;
+    border-radius: 50px;
+    font-family: 'Bangers', cursive;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 12px rgba(57,255,20,0.3), inset 0 0 12px rgba(57,255,20,0.05);
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-secondary:hover {
+    background: rgba(57,255,20,0.1);
+    box-shadow: 0 0 30px rgba(57,255,20,0.6), 0 0 60px rgba(57,255,20,0.3);
+    transform: translateY(-3px);
+  }
+
+  .hero-image-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: slideInRight 0.9s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(60px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .hero-image-wrap img {
+    width: 100%;
+    max-width: 560px;
+    border-radius: 24px;
+    box-shadow: 0 0 40px rgba(191,0,255,0.4), 0 0 100px rgba(0,245,255,0.2);
+    animation: heroFloat 6s ease-in-out infinite;
+  }
+
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0px) rotate(-1deg); }
+    50% { transform: translateY(-18px) rotate(1deg); }
+  }
+
+  .hero-glow-ring {
+    position: absolute;
+    width: 580px; height: 580px;
+    border-radius: 50%;
+    border: 2px solid rgba(191,0,255,0.3);
+    animation: spinRing 12s linear infinite;
+    box-shadow: 0 0 30px rgba(191,0,255,0.2), inset 0 0 30px rgba(191,0,255,0.1);
+  }
+  .hero-glow-ring::before {
+    content: '';
+    position: absolute;
+    top: -4px; left: 50%;
+    width: 12px; height: 12px;
+    background: var(--neon-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--neon-cyan);
+    transform: translateX(-50%);
+  }
+
+  @keyframes spinRing { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .ticker-wrap {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(0,245,255,0.08);
+    border-top: 1px solid rgba(0,245,255,0.2);
+    padding: 12px 0;
+    overflow: hidden;
+  }
+  .ticker {
+    display: flex;
+    gap: 60px;
+    animation: ticker 20s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker span {
+    font-family: 'Bangers', cursive;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 8px var(--neon-cyan);
+  }
+  .ticker span.sep { color: var(--neon-yellow); }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--dark2);
+    border-bottom: 1px solid rgba(255,45,120,0.15);
+    padding: 40px 0;
+  }
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 0 40px;
+  }
+  .stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  .stat-item.visible { opacity: 1; transform: translateY(0); }
+  .stat-num {
+    font-family: 'Bangers', cursive;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 4px;
+  }
+
+  /* SECTIONS SHARED */
+  section {
+    padding: 120px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.78rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--neon-pink);
+    text-shadow: 0 0 8px var(--neon-pink);
+    margin-bottom: 12px;
+    font-weight: 900;
+  }
+
+  .section-title {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    letter-spacing: 3px;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .section-desc {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 580px;
+    line-height: 1.8;
+  }
+
+  /* ABOUT */
+  #about {
+    display: flex;
+    gap: 80px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .about-visual {
+    flex: 1;
+    min-width: 280px;
+    position: relative;
+  }
+
+  .about-card {
+    background: linear-gradient(135deg, rgba(191,0,255,0.1), rgba(0,245,255,0.05));
+    border: 1px solid rgba(191,0,255,0.25);
+    border-radius: 28px;
+    padding: 48px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(191,0,255,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: conic-gradient(from 0deg, transparent 0deg, rgba(0,245,255,0.05) 60deg, transparent 120deg);
+    animation: rotateSweep 8s linear infinite;
+  }
+  @keyframes rotateSweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  .about-emoji { font-size: 5rem; display: block; margin-bottom: 20px; animation: bounce 3s ease-in-out infinite; }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-12px) scale(1.05); }
+  }
+
+  .about-card-title {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 15px var(--neon-yellow);
+    letter-spacing: 2px;
+    position: relative;
+  }
+
+  .about-text { flex: 1.2; min-width: 280px; }
+
+  .feature-list { margin-top: 36px; display: flex; flex-direction: column; gap: 16px; }
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 20px 24px;
+    transition: all 0.3s;
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  .feature-item.visible { opacity: 1; transform: translateX(0); }
+  .feature-item:hover {
+    background: rgba(0,245,255,0.05);
+    border-color: rgba(0,245,255,0.3);
+    transform: translateX(6px);
+  }
+  .feature-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .feature-content h4 { font-size: 1rem; font-weight: 900; margin-bottom: 4px; }
+  .feature-content p { font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+  /* TOKENOMICS */
+  #tokenomics-wrap {
+    background: var(--dark2);
+    border-top: 1px solid rgba(57,255,20,0.1);
+    border-bottom: 1px solid rgba(57,255,20,0.1);
+  }
+
+  #tokenomics { max-width: 1200px; }
+
+  .token-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .token-card {
+    background: rgba(57,255,20,0.04);
+    border: 1px solid rgba(57,255,20,0.2);
+    border-radius: 20px;
+    padding: 36px 28px;
+    text-align: center;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  .token-card.visible { opacity: 1; transform: scale(1); }
+  .token-card:hover {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 30px rgba(57,255,20,0.25), 0 0 60px rgba(57,255,20,0.1);
+    transform: translateY(-6px) scale(1.02);
+  }
+  .token-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--neon-green);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    box-shadow: 0 0 10px var(--neon-green);
+  }
+  .token-card:hover::after { transform: scaleX(1); }
+
+  .token-pct {
+    font-family: 'Bangers', cursive;
+    font-size: 3.5rem;
+    color: var(--neon-green);
+    text-shadow: 0 0 20px var(--neon-green);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .token-name {
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 12px;
+  }
+  .token-desc { font-size: 0.85rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+  .token-info-row {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 48px;
+  }
+  .token-info-box {
+    flex: 1;
+    min-width: 200px;
+    background: rgba(255,230,0,0.05);
+    border: 1px solid rgba(255,230,0,0.2);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s;
+  }
+  .token-info-box:hover {
+    border-color: var(--neon-yellow);
+    box-shadow: 0 0 20px rgba(255,230,0,0.2);
+  }
+  .token-info-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--neon-yellow);
+    margin-bottom: 8px;
+  }
+  .token-info-value {
+    font-family: 'Bangers', cursive;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    word-break: break-all;
+  }
+
+  /* ROADMAP */
+  #roadmap-wrap {
+    background: linear-gradient(180deg, var(--dark) 0%, rgba(255,45,120,0.05) 50%, var(--dark) 100%);
+  }
+  #roadmap { max-width: 1200px; }
+
+  .roadmap-timeline {
+    position: relative;
+    margin-top: 70px;
+    padding-left: 0;
+  }
+  .roadmap-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+    box-shadow: 0 0 12px var(--neon-cyan);
+    transform: translateX(-50%);
+  }
+
+  .roadmap-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    margin-bottom: 60px;
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  .roadmap-item.left { flex-direction: row; }
+  .roadmap-item.right { flex-direction: row-reverse; }
+  .roadmap-item.left { transform: translateX(-40px); }
+  .roadmap-item.right { transform: translateX(40px); }
+  .roadmap-item.visible { opacity: 1; transform: translateX(0); }
+
+  .roadmap-card {
+    flex: 1;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 32px;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .roadmap-card:hover {
+    background: rgba(255,45,120,0.06);
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 25px rgba(255,45,120,0.15);
+  }
+
+  .roadmap-phase {
+    font-family: 'Bangers', cursive;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 8px var(--neon-cyan);
+    margin-bottom: 8px;
+  }
+  .roadmap-title {
+    font-family: 'Bangers', cursive;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .roadmap-items { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .roadmap-items li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.65);
+  }
+  .roadmap-items li::before { content: '⚡'; font-size: 0.8rem; }
+  .roadmap-items li.done { color: var(--neon-green); text-decoration: line-through; text-decoration-color: rgba(57,255,20,0.4); }
+  .roadmap-items li.done::before { content: '✅'; }
+
+  .roadmap-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--neon-pink);
+    border: 3px solid var(--dark);
+    box-shadow: 0 0 12px var(--neon-pink), 0 0 30px rgba(255,45,120,0.4);
+    flex-shrink: 0;
+    align-self: center;
+    position: relative;
+    z-index: 2;
+  }
+  .roadmap-dot.active { background: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan), 0 0 40px rgba(0,245,255,0.5); animation: pulseGlow 2s ease-in-out infinite; }
+  .roadmap-dot.done { background: var(--neon-green); box-shadow: 0 0 12px var(--neon-green); }
+  @keyframes pulseGlow { 0%,100% { box-shadow: 0 0 15px var(--neon-cyan), 0 0 40px rgba(0,245,255,0.5); } 50% { box-shadow: 0 0 25px var(--neon-cyan), 0 0 70px rgba(0,245,255,0.8); } }
+
+  .phase-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .phase-badge.done { background: rgba(57,255,20,0.1); border: 1px solid var(--neon-green); color: var(--neon-green); }
+  .phase-badge.active { background: rgba(0,245,255,0.1); border: 1px solid var(--neon-cyan); color: var(--neon-cyan); }
+  .phase-badge.upcoming { background: rgba(255,111,0,0.1); border: 1px solid var(--neon-orange); color: var(--neon-orange); }
+
+  /* HOW TO BUY */
+  #buy-wrap { background: var(--dark2); }
+  #buy { max-width: 1100px; }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+    margin-top: 60px;
+  }
+  .step-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 36px 28px;
+    text-align: center;
+    transition: all 0.4s;
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .step-card.visible { opacity: 1; transform: translateY(0); }
+  .step-card:hover {
+    border-color: var(--neon-purple);
+    background: rgba(191,0,255,0.05);
+    box-shadow: 0 0 30px rgba(191,0,255,0.15);
+    transform: translateY(-6px);
+  }
+  .step-num {
+    font-family: 'Bangers', cursive;
+    font-size: 4rem;
+    color: rgba(255,255,255,0.07);
+    position: absolute;
+    top: 16px; right: 20px;
+    line-height: 1;
+  }
+  .step-icon { font-size: 2.5rem; margin-bottom: 16px; display: block; }
+  .step-title { font-family: 'Bangers', cursive; font-size: 1.4rem; letter-spacing: 2px; margin-bottom: 10px; }
+  .step-desc { font-size: 0.88rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+  /* COMMUNITY */
+  #community { text-align: center; }
+  .community-inner { text-align: center; }
+  .meme-row {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 48px 0;
+  }
+  .meme-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 32px 36px;
+    font-size: 3rem;
+    transition: all 0.3s;
+    cursor: default;
+    opacity: 0;
+    transform: scale(0.8) rotate(-5deg);
+  }
+  .meme-card.visible { opacity: 1; transform: scale(1) rotate(0deg); }
+  .meme-card:hover { transform: scale(1.15) rotate(5deg); border-color: var(--neon-pink); box-shadow: 0 0 30px rgba(255,45,120,0.3); }
+
+  /* SOCIAL BUTTONS */
+  #socials { text-align: center; }
+
+  .social-grid {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 50px;
+  }
+
+  .social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-family: 'Bangers', cursive;
+    font-size: 1.15rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .social-btn.visible { opacity: 1; transform: translateY(0); }
+  .social-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .social-btn:hover::before { opacity: 1; }
+  .social-btn:hover { transform: translateY(-4px) scale(1.05); }
+
+  .social-btn.twitter {
+    background: transparent;
+    border: 2px solid #1da1f2;
+    color: #1da1f2;
+    box-shadow: 0 0 12px rgba(29,161,242,0.3), inset 0 0 12px rgba(29,161,242,0.05);
+  }
+  .social-btn.twitter:hover { background: rgba(29,161,242,0.1); box-shadow: 0 0 30px rgba(29,161,242,0.6), 0 0 60px rgba(29,161,242,0.3); }
+
+  .social-btn.telegram {
+    background: transparent;
+    border: 2px solid #2aabee;
+    color: #2aabee;
+    box-shadow: 0 0 12px rgba(42,171,238,0.3), inset 0 0 12px rgba(42,171,238,0.05);
+  }
+  .social-btn.telegram:hover { background: rgba(42,171,238,0.1); box-shadow: 0 0 30px rgba(42,171,238,0.6); }
+
+  .social-btn.discord {
+    background: transparent;
+    border: 2px solid #5865f2;
+    color: #5865f2;
+    box-shadow: 0 0 12px rgba(88,101,242,0.3), inset 0 0 12px rgba(88,101,242,0.05);
+  }
+  .social-btn.discord:hover { background: rgba(88,101,242,0.1); box-shadow: 0 0 30px rgba(88,101,242,0.6); }
+
+  .social-btn.dextools {
+    background: transparent;
+    border: 2px solid var(--neon-green);
+    color: var(--neon-green);
+    box-shadow: 0 0 12px rgba(57,255,20,0.3), inset 0 0 12px rgba(57,255,20,0.05);
+  }
+  .social-btn.dextools:hover { background: rgba(57,255,20,0.08); box-shadow: 0 0 30px rgba(57,255,20,0.6); }
+
+  .social-btn.uniswap {
+    background: transparent;
+    border: 2px solid #ff007a;
+    color: #ff007a;
+    box-shadow: 0 0 12px rgba(255,0,122,0.3), inset 0 0 12px rgba(255,0,122,0.05);
+  }
+  .social-btn.uniswap:hover { background: rgba(255,0,122,0.08); box-shadow: 0 0 30px rgba(255,0,122,0.6); }
+
+  .social-btn.coinmarketcap {
+    background: transparent;
+    border: 2px solid var(--neon-yellow);
+    color: var(--neon-yellow);
+    box-shadow: 0 0 12px rgba(255,230,0,0.3), inset 0 0 12px rgba(255,230,0,0.05);
+  }
+  .social-btn.coinmarketcap:hover { background: rgba(255,230,0,0.08); box-shadow: 0 0 30px rgba(255,230,0,0.6); }
+
+  .social-icon { font-size: 1.3rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark2);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 60px 40px 40px;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Bangers', cursive;
+    font-size: 3rem;
+    letter-spacing: 4px;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 20px var(--neon-cyan);
+    margin-bottom: 16px;
+  }
+  .footer-logo span { color: var(--neon-yellow); text-shadow: 0 0 20px var(--neon-yellow); }
+  .footer-tagline { color: rgba(255,255,255,0.4); font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px; }
+  .footer-links { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 40px; }
+  .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.85rem; letter-spacing: 1px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--neon-cyan); }
+  .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.2); }
+  .footer-disclaimer { max-width: 600px; margin: 16px auto 0; font-size: 0.75rem; color: rgba(255,255,255,0.2); line-height: 1.6; }
+
+  /* Scroll animations helper */
+  .reveal { opacity: 0; transform: translateY(40px); transition: all 0.7s cubic-bezier(0.16,1,0.3,1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Animated section backgrounds */
+  .section-bg {
+    position: relative;
+  }
+  .section-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(191,0,255,0.06) 0%, transparent 70%);
+  }
+
+  /* Neon dividers */
+  .neon-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-pink), var(--neon-purple), transparent);
+    box-shadow: 0 0 8px var(--neon-cyan);
+    margin: 0;
+    opacity: 0.4;
+  }
+
+  /* Marquee */
+  .marquee-wrap {
+    overflow: hidden;
+    background: rgba(255,230,0,0.05);
+    border-top: 1px solid rgba(255,230,0,0.15);
+    border-bottom: 1px solid rgba(255,230,0,0.15);
+    padding: 14px 0;
+  }
+  .marquee-inner { display: flex; gap: 60px; animation: marquee 16s linear infinite; }
+  .marquee-inner span {
+    font-family: 'Bangers', cursive;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 8px var(--neon-yellow);
+    white-space: nowrap;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    .hero-content { grid-template-columns: 1fr; text-align: center; }
+    .hero-text { text-align: center; }
+    .hero-btns { justify-content: center; }
+    .hero-image-wrap { order: -1; }
+    .hero-glow-ring { width: 300px; height: 300px; }
+    #about { flex-direction: column; }
+    .roadmap-timeline::before { left: 20px; }
+    .roadmap-item { flex-direction: column !important; }
+    .roadmap-dot { align-self: flex-start; margin-left: 10px; }
+    section { padding: 80px 24px; }
+  }
+
+  /* Glitch effect on hover title */
+  .glitch {
+    position: relative;
+    display: inline-block;
+  }
+  .glitch:hover::before,
+  .glitch:hover::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    font-family: 'Bangers', cursive;
+    font-size: inherit;
+    letter-spacing: inherit;
+    color: var(--neon-cyan);
+    animation: glitch1 0.3s steps(2, end) infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  }
+  .glitch:hover::after {
+    color: var(--neon-pink);
+    animation: glitch2 0.3s steps(2, end) infinite;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  }
+  @keyframes glitch1 {
+    0% { transform: translate(2px, 0); }
+    50% { transform: translate(-2px, 0); }
+    100% { transform: translate(0px, 0); }
+  }
+  @keyframes glitch2 {
+    0% { transform: translate(-2px, 0); }
+    50% { transform: translate(2px, 0); }
+    100% { transform: translate(0, 0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">BABY<span>PUNCH</span></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#tokenomics-wrap">Tokenomics</a></li>
+    <li><a href="#roadmap-wrap">Roadmap</a></li>
+    <li><a href="#buy-wrap">How to Buy</a></li>
+    <li><a href="#socials">Community</a></li>
+  </ul>
+  <a href="https://pump.fun" target="_blank" rel="noopener" class="nav-cta">BUY NOW 🚀</a>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-bg"></div>
+  <div class="floating-particles" id="particles"></div>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-tag">🔥 The Next 100x Meme Coin</div>
+      <h1 class="hero-title">
+        <span class="line1">BABY</span>
+        <span class="line2 glitch" data-text="PUNCH 🐒">PUNCH 🐒</span>
+      </h1>
+      <p class="hero-desc">The wildest monkey on the blockchain. Sitting on bananas, punching through charts. Join the gang and ride the neon wave to the moon. 🌙</p>
+      <div class="hero-btns">
+        <a href="https://pump.fun" target="_blank" rel="noopener" class="btn-primary">🚀 BUY $BPUNCH</a>
+        <a href="#tokenomics-wrap" class="btn-secondary">📊 TOKENOMICS</a>
+      </div>
+    </div>
+    <div class="hero-image-wrap">
+      <div class="hero-glow-ring"></div>
+      <img src="Baby_puch2.png" alt="Baby Punch Monkey">
+    </div>
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker" id="ticker">
+      <span>$BPUNCH</span><span class="sep">★</span>
+      <span>TO THE MOON 🌙</span><span class="sep">★</span>
+      <span>100X GEM 💎</span><span class="sep">★</span>
+      <span>BUY THE DIP 🍌</span><span class="sep">★</span>
+      <span>NEON APE GANG 🐒</span><span class="sep">★</span>
+      <span>PUNCH IT 👊</span><span class="sep">★</span>
+      <span>$BPUNCH</span><span class="sep">★</span>
+      <span>TO THE MOON 🌙</span><span class="sep">★</span>
+      <span>100X GEM 💎</span><span class="sep">★</span>
+      <span>BUY THE DIP 🍌</span><span class="sep">★</span>
+      <span>NEON APE GANG 🐒</span><span class="sep">★</span>
+      <span>PUNCH IT 👊</span><span class="sep">★</span>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num" style="color:var(--neon-cyan)">$4.2M</div>
+      <div class="stat-label">Market Cap</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:var(--neon-pink)">69,420</div>
+      <div class="stat-label">Holders</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:var(--neon-yellow)">1B</div>
+      <div class="stat-label">Total Supply</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:var(--neon-green)">0%</div>
+      <div class="stat-label">Buy / Sell Tax</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" style="color:var(--neon-purple)">🔒</div>
+      <div class="stat-label">LP Locked</div>
+    </div>
+  </div>
+</div>
+
+<div class="neon-divider"></div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span>🐒 BABY PUNCH</span><span>🍌 APE IN NOW</span><span>💎 DIAMOND HANDS</span><span>🚀 MOON BOUND</span><span>🔥 NEON GANG</span><span>⚡ PUNCH THE CHARTS</span><span>🌙 1000X INCOMING</span><span>🐒 BABY PUNCH</span><span>🍌 APE IN NOW</span><span>💎 DIAMOND HANDS</span><span>🚀 MOON BOUND</span><span>🔥 NEON GANG</span><span>⚡ PUNCH THE CHARTS</span><span>🌙 1000X INCOMING</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="section-bg">
+  <div class="about-visual reveal">
+    <div class="about-card">
+      <span class="about-emoji">🐒</span>
+      <div class="about-card-title">THE BABY PUNCH MANIFESTO</div>
+      <p style="color:rgba(255,255,255,0.5);font-size:0.9rem;margin-top:12px;line-height:1.7;position:relative;">Born in the neon streets of the blockchain, Baby Punch is more than a monkey — it's a movement. Sitting on bananas. Punching FUD. Making millionaires.</p>
+    </div>
+  </div>
+  <div class="about-text">
+    <div class="section-label">Who We Are</div>
+    <h2 class="section-title reveal">THE WILDEST<br><span style="color:var(--neon-yellow)">MEME COIN</span><br>ALIVE 🐒</h2>
+    <p class="section-desc reveal">Baby Punch isn't just another meme coin. It's the most electrifying, neon-soaked, banana-powered community on Solana. Our baby monkey punches through barriers, smashes ATHs, and refuses to go down.</p>
+    <div class="feature-list">
+      <div class="feature-item">
+        <span class="feature-icon">🔒</span>
+        <div class="feature-content">
+          <h4>Liquidity Locked Forever</h4>
+          <p>LP burned and locked. No rugs. Only moon.</p>
+        </div>
+      </div>
+      <div class="feature-item" style="transition-delay:0.1s">
+        <span class="feature-icon">🛡️</span>
+        <div class="feature-content">
+          <h4>Contract Renounced</h4>
+          <p>The contract is renounced. Baby Punch belongs to the people.</p>
+        </div>
+      </div>
+      <div class="feature-item" style="transition-delay:0.2s">
+        <span class="feature-icon">💎</span>
+        <div class="feature-content">
+          <h4>0% Tax — Always</h4>
+          <p>Buy and sell with zero tax. Every token is yours.</p>
+        </div>
+      </div>
+      <div class="feature-item" style="transition-delay:0.3s">
+        <span class="feature-icon">🚀</span>
+        <div class="feature-content">
+          <h4>Viral Community Growth</h4>
+          <p>Tens of thousands of holders and growing every hour.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="neon-divider"></div>
+
+<!-- TOKENOMICS -->
+<div id="tokenomics-wrap" style="padding:1px 0;">
+  <section id="tokenomics">
+    <div class="section-label reveal">The Numbers</div>
+    <h2 class="section-title reveal">TOKENOMICS 📊</h2>
+    <p class="section-desc reveal">Simple. Fair. Transparent. Just like a good banana.</p>
+
+    <div class="token-grid">
+      <div class="token-card" style="transition-delay:0s">
+        <div class="token-pct">60%</div>
+        <div class="token-name">Public Sale</div>
+        <div class="token-desc">Open to everyone. Fair launch. No presale whales.</div>
+      </div>
+      <div class="token-card" style="transition-delay:0.1s">
+        <div class="token-pct">20%</div>
+        <div class="token-name">Liquidity Pool</div>
+        <div class="token-desc">Locked permanently. Deep liquidity for smooth trades.</div>
+      </div>
+      <div class="token-card" style="transition-delay:0.2s">
+        <div class="token-pct">10%</div>
+        <div class="token-name">Marketing</div>
+        <div class="token-desc">Influencers, ads, listings, and viral campaigns.</div>
+      </div>
+      <div class="token-card" style="transition-delay:0.3s">
+        <div class="token-pct">5%</div>
+        <div class="token-name">Team</div>
+        <div class="token-desc">6-month vesting. Aligned with the community's success.</div>
+      </div>
+      <div class="token-card" style="transition-delay:0.4s">
+        <div class="token-pct">5%</div>
+        <div class="token-name">CEX Listings</div>
+        <div class="token-desc">Reserved for exchange listings and ecosystem growth.</div>
+      </div>
+    </div>
+
+    <div class="token-info-row" style="margin-top:48px;">
+      <div class="token-info-box reveal">
+        <div class="token-info-label">Token Name</div>
+        <div class="token-info-value">Baby Punch</div>
+      </div>
+      <div class="token-info-box reveal" style="transition-delay:0.1s">
+        <div class="token-info-label">Ticker</div>
+        <div class="token-info-value" style="color:var(--neon-yellow);text-shadow:0 0 10px var(--neon-yellow)">$BPUNCH</div>
+      </div>
+      <div class="token-info-box reveal" style="transition-delay:0.2s">
+        <div class="token-info-label">Total Supply</div>
+        <div class="token-info-value">1,000,000,000</div>
+      </div>
+      <div class="token-info-box reveal" style="transition-delay:0.3s">
+        <div class="token-info-label">Contract Address</div>
+        <div class="token-info-value" style="font-size:0.85rem;color:var(--neon-cyan)">0x...BPUNCH</div>
+      </div>
+      <div class="token-info-box reveal" style="transition-delay:0.4s">
+        <div class="token-info-label">Network</div>
+        <div class="token-info-value">Solana</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="neon-divider"></div>
+
+<!-- ROADMAP -->
+<div id="roadmap-wrap" style="padding:1px 0;">
+  <section id="roadmap">
+    <div class="section-label reveal">The Journey</div>
+    <h2 class="section-title reveal">ROADMAP 🗺️</h2>
+    <p class="section-desc reveal">We know where we're going. Straight to the moon, with a banana in hand.</p>
+
+    <div class="roadmap-timeline">
+
+      <div class="roadmap-item left">
+        <div class="roadmap-card">
+          <div class="phase-badge done">✅ Completed</div>
+          <div class="roadmap-phase">PHASE 01</div>
+          <div class="roadmap-title">THE BIRTH 🐣</div>
+          <ul class="roadmap-items">
+            <li class="done">Token contract deployed & renounced</li>
+            <li class="done">Liquidity pool created & locked</li>
+            <li class="done">Website launch</li>
+            <li class="done">Social media channels established</li>
+            <li class="done">First 1,000 holders milestone</li>
+          </ul>
+        </div>
+        <div class="roadmap-dot done"></div>
+        <div style="flex:1"></div>
+      </div>
+
+      <div class="roadmap-item right">
+        <div style="flex:1"></div>
+        <div class="roadmap-dot active"></div>
+        <div class="roadmap-card">
+          <div class="phase-badge active">🔥 In Progress</div>
+          <div class="roadmap-phase">PHASE 02</div>
+          <div class="roadmap-title">THE PUNCH 👊</div>
+          <ul class="roadmap-items">
+            <li class="done">10,000 holders</li>
+            <li>CoinGecko & CoinMarketCap listings</li>
+            <li>Major influencer partnerships</li>
+            <li>Dextools trending</li>
+            <li>Viral meme campaign</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="roadmap-item left">
+        <div class="roadmap-card">
+          <div class="phase-badge upcoming">🚀 Upcoming</div>
+          <div class="roadmap-phase">PHASE 03</div>
+          <div class="roadmap-title">THE RISE 📈</div>
+          <ul class="roadmap-items">
+            <li>Tier-1 CEX listing</li>
+            <li>50,000 holders</li>
+            <li>Baby Punch NFT collection drop</li>
+            <li>Partnership with major DeFi protocols</li>
+            <li>$10M market cap milestone</li>
+          </ul>
+        </div>
+        <div class="roadmap-dot"></div>
+        <div style="flex:1"></div>
+      </div>
+
+      <div class="roadmap-item right">
+        <div style="flex:1"></div>
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-card">
+          <div class="phase-badge upcoming">🌙 Moonshot</div>
+          <div class="roadmap-phase">PHASE 04</div>
+          <div class="roadmap-title">THE MOON 🌕</div>
+          <ul class="roadmap-items">
+            <li>100,000+ holders worldwide</li>
+            <li>Baby Punch DAO governance</li>
+            <li>Play-to-earn game launch</li>
+            <li>Binance / Coinbase listing</li>
+            <li>World domination 🐒</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<div class="neon-divider"></div>
+
+<!-- HOW TO BUY -->
+<div id="buy-wrap" style="padding:1px 0;">
+  <section id="buy">
+    <div class="section-label reveal">Get In Early</div>
+    <h2 class="section-title reveal" style="text-align:center">HOW TO BUY<br><span style="color:var(--neon-green)">$BPUNCH 🍌</span></h2>
+    <p class="section-desc reveal" style="text-align:center;margin:0 auto;">Four simple steps. Be a degen. Ape in.</p>
+
+    <div class="steps-grid">
+      <div class="step-card" style="transition-delay:0s">
+        <span class="step-num">01</span>
+        <span class="step-icon">👛</span>
+        <div class="step-title">Get a Wallet</div>
+        <p class="step-desc">Download Phantom or use any Solana-compatible wallet. Available on iOS, Android & desktop.</p>
+      </div>
+      <div class="step-card" style="transition-delay:0.1s">
+        <span class="step-num">02</span>
+        <span class="step-icon">💰</span>
+        <div class="step-title">Get Some ETH</div>
+        <p class="step-desc">Buy Solana (SOL) from Coinbase, Binance, or any exchange. Transfer it to your Phantom wallet.</p>
+      </div>
+      <div class="step-card" style="transition-delay:0.2s">
+        <span class="step-num">03</span>
+        <span class="step-icon">🔄</span>
+        <div class="step-title">Go to pump.fun</div>
+        <p class="step-desc">Visit pump.fun, search for $BPUNCH or paste the contract address and connect your Phantom wallet.</p>
+      </div>
+      <div class="step-card" style="transition-delay:0.3s">
+        <span class="step-num">04</span>
+        <span class="step-icon">🚀</span>
+        <div class="step-title">SWAP & HODL</div>
+        <p class="step-desc">Swap SOL for $BPUNCH on pump.fun. No slippage worries — fast, cheap Solana transactions. Welcome to the Punch Gang. 🐒</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:60px;" class="reveal">
+      <div style="background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.2);border-radius:20px;padding:32px 40px;display:inline-block;">
+        <div style="font-size:0.78rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:10px;">Contract Address</div>
+        <div style="font-family:'Bangers',cursive;font-size:1.2rem;letter-spacing:2px;color:var(--neon-cyan);text-shadow:0 0 10px var(--neon-cyan);word-break:break-all;">0x000...BPUNCH (Replace with real CA)</div>
+        <button onclick="navigator.clipboard.writeText('0x000...BPUNCH')" style="margin-top:16px;background:rgba(0,245,255,0.1);border:1px solid var(--neon-cyan);color:var(--neon-cyan);padding:10px 28px;border-radius:50px;cursor:pointer;font-family:'Bangers',cursive;letter-spacing:2px;font-size:1rem;transition:all 0.3s;" onmouseover="this.style.background='rgba(0,245,255,0.2)'" onmouseout="this.style.background='rgba(0,245,255,0.1)'">📋 COPY ADDRESS</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="neon-divider"></div>
+
+<!-- COMMUNITY / MEME SECTION -->
+<section id="community">
+  <div class="community-inner">
+    <div class="section-label reveal">Our People</div>
+    <h2 class="section-title reveal" style="text-align:center">JOIN THE<br><span style="color:var(--neon-pink)">PUNCH GANG 🔥</span></h2>
+    <p class="section-desc reveal" style="text-align:center;margin:0 auto 0;">Degens, apes, and diamond hands. United under one banana.</p>
+    <div class="meme-row">
+      <div class="meme-card" style="transition-delay:0s">🐒</div>
+      <div class="meme-card" style="transition-delay:0.1s">🍌</div>
+      <div class="meme-card" style="transition-delay:0.2s">🌙</div>
+      <div class="meme-card" style="transition-delay:0.3s">💎</div>
+      <div class="meme-card" style="transition-delay:0.4s">🚀</div>
+      <div class="meme-card" style="transition-delay:0.5s">👊</div>
+      <div class="meme-card" style="transition-delay:0.6s">🔥</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIALS -->
+<section id="socials" style="padding-bottom:80px;">
+  <div class="section-label reveal" style="text-align:center">Connect With Us</div>
+  <h2 class="section-title reveal" style="text-align:center">FOLLOW THE<br><span style="color:var(--neon-cyan)">NEON APE 🐒</span></h2>
+  <div class="social-grid">
+    <a href="#" class="social-btn twitter" style="transition-delay:0s">
+      <span class="social-icon">𝕏</span> TWITTER
+    </a>
+    <a href="#" class="social-btn telegram" style="transition-delay:0.07s">
+      <span class="social-icon">✈️</span> TELEGRAM
+    </a>
+    <a href="#" class="social-btn discord" style="transition-delay:0.14s">
+      <span class="social-icon">🎮</span> DISCORD
+    </a>
+    <a href="#" class="social-btn dextools" style="transition-delay:0.21s">
+      <span class="social-icon">📊</span> DEXTOOLS
+    </a>
+    <a href="https://pump.fun" target="_blank" rel="noopener" class="social-btn uniswap" style="transition-delay:0.28s">
+      <span class="social-icon">🔥</span> PUMP.FUN
+    </a>
+    <a href="#" class="social-btn coinmarketcap" style="transition-delay:0.35s">
+      <span class="social-icon">🪙</span> COINMARKETCAP
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">BABY<span>PUNCH</span></div>
+  <div class="footer-tagline">🐒 Punch Through The Charts 🍌</div>
+  <div class="footer-links">
+    <a href="#">Home</a>
+    <a href="#tokenomics-wrap">Tokenomics</a>
+    <a href="#roadmap-wrap">Roadmap</a>
+    <a href="#">Whitepaper</a>
+    <a href="#">Brand Kit</a>
+  </div>
+  <div class="footer-copy">© 2025 Baby Punch. All rights reserved.</div>
+  <div class="footer-disclaimer">$BPUNCH is a meme coin with no intrinsic value or financial expectation. This is not financial advice. Always do your own research.</div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursorTrail');
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+  setTimeout(() => {
+    trail.style.left = mx + 'px';
+    trail.style.top = my + 'px';
+  }, 60);
+});
+
+// Floating particles
+const particlesEl = document.getElementById('particles');
+const colors = ['#ff2d78','#00f5ff','#ffe600','#39ff14','#bf00ff','#ff6f00'];
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random() * 6 + 2;
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  p.style.cssText = `
+    width:${size}px;height:${size}px;
+    left:${Math.random()*100}%;
+    background:${color};
+    box-shadow:0 0 ${size*3}px ${color};
+    animation-duration:${Math.random()*15+8}s;
+    animation-delay:${Math.random()*10}s;
+  `;
+  particlesEl.appendChild(p);
+}
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal, .stat-item, .feature-item, .token-card, .step-card, .roadmap-item, .meme-card, .social-btn').forEach(el => {
+  observer.observe(el);
+});
+
+// Nav shadow on scroll
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 50) {
+    nav.style.borderBottomColor = 'rgba(0,245,255,0.25)';
+  } else {
+    nav.style.borderBottomColor = 'rgba(0,245,255,0.12)';
+  }
+});
+</script>
+</body>
+</html>
